@@ -1,0 +1,18 @@
+<h1>Weather App</h1>
+<%= form_with url: "/weather/fetch", method: :post, local: true do %>
+  <label for="city">Enter City Name:</label>
+  <%= text_field_tag :city, nil, required: true %>
+  <%= submit_tag "Get Weather" %>
+<% end %>
+
+<% if @weather_data %>
+  <% if @weather_data["cod"] == 200 %>
+    <h2>Weather in <%= @city %>:</h2>
+    <p>Temperature: <%= @weather_data["main"]["temp"] %>°C</p>
+    <p>Description: <%= @weather_data["weather"].first["description"] %></p>
+  <% else %>
+    <p>City not found. Please check the name and try again.</p>
+  <% end %>
+<% else %>
+  <p>No weather data available. Please enter a city name.</p>
+<% end %>
